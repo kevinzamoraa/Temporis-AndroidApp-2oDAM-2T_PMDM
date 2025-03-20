@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "636050813149",
+    "project_id": "temporis-kz",
+    "storage_bucket": "temporis-kz.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:636050813149:android:7213ccfe76ad01a32bab34",
+        "android_client_info": {
+          "package_name": "com.kevinzamora.temporis_androidapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAv4FPoH6OqM-TYV_v_-eSuekQ-P1z5qIM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
