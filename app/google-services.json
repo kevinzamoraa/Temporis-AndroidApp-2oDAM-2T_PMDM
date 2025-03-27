@@ -12,7 +12,20 @@
           "package_name": "com.kevinzamora.temporis_androidapp"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "636050813149-6fnav2v1b8tfnnbjhpfvp937bp477r2a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kevinzamora.temporis_androidapp",
+            "certificate_hash": "7a59884e403e4eca69246627444f19c67890837c"
+          }
+        },
+        {
+          "client_id": "636050813149-34fd4g39lg1v7ti69mn3v1ce7j6ilfcm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAv4FPoH6OqM-TYV_v_-eSuekQ-P1z5qIM"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "636050813149-34fd4g39lg1v7ti69mn3v1ce7j6ilfcm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
