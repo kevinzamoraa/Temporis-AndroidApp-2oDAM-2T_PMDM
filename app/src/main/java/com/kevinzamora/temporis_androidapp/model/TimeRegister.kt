@@ -1,4 +1,4 @@
-package com.kevinzamora.temporis_androidapp.ui.models
+package com.kevinzamora.temporis_androidapp.model
 
 data class TimeRegister( // TimeRegister - For tracking time and activities
     val id: String = "",

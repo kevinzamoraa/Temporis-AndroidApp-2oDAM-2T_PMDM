@@ -1,4 +1,4 @@
-package com.kevinzamora.temporis_androidapp.ui.models
+package com.kevinzamora.temporis_androidapp.model
 
 data class Counter( // Counter - System for tracking goals
     val id: String = "",
