@@ -8,15 +8,36 @@ import android.view.View
 import android.view.ViewGroup
 import com.kevinzamora.temporis_androidapp.databinding.FragmentLoginBinding
 import androidx.navigation.fragment.findNavController
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
+// Autenticación con Google
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+
+// View binding
+import androidx.viewbinding.ViewBinding
+import com.temporis.databinding.FragmentLoginBinding
+import com.temporis.databinding.FragmentDashboardBinding
+import com.temporis.databinding.FragmentTimerBinding
+
+// Componentes de UI y diálogos
+import android.app.Dialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.MaterialTextInputEditText
+import com.google.android.material.button.MaterialButton
+import androidx.appcompat.app.AppCompatActivity
+import android.view.View
+import android.widget.Toast
+
 class LoginFragment : Fragment() {
+    
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
     private lateinit var auth: FirebaseAuth
@@ -86,7 +107,7 @@ class LoginFragment : Fragment() {
 
     private fun signInWithGoogle() {
         val signInIntent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
+        startActivityForResult(signInIntent, Companion.RC_SIGN_IN)
     }
 
     private fun loginAnonymous() {
@@ -127,7 +148,7 @@ class LoginFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == Companion.RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)!!
@@ -164,5 +185,9 @@ class LoginFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val RC_SIGN_IN = 123 // Cualquier número constante para el requestCode
     }
 }
