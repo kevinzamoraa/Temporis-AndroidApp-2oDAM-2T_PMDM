@@ -1,4 +1,4 @@
-package com.kevinzamora.temporis_androidapp.ui.auth.forgot_password
+package com.kevinzamora.temporis_androidapp.ui.auth.forgotten_password
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
