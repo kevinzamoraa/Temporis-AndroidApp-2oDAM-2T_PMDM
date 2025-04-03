@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.kevinzamora.temporis_androidapp.R
 import com.google.firebase.auth.FirebaseAuth
+import com.kevinzamora.temporis_androidapp.ui.auth.login.LoginActivity
 import java.util.regex.Pattern
 
 
@@ -28,7 +29,7 @@ class ForgottenPassword : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val root = inflater.inflate(R.layout.fragment_contra_olvidada, container, false)
+        val root = inflater.inflate(R.layout.fragment_forgot_password, container, false)
         val ivRegistroAtras = root.findViewById<ImageView>(R.id.ivRegistroAtras2)
         val etContraOlvidadaEmail = root.findViewById<EditText>(R.id.etContraOlvidadaEmail)
         val btnContraOlvidadaEnviar = root.findViewById<Button>(R.id.btnContraOlvidadaEnviar)

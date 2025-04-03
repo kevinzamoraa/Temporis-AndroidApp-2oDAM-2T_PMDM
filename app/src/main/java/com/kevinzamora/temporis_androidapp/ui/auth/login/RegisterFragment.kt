@@ -13,10 +13,11 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.tenisclubdroid.R
-import com.example.tenisclubdroid.ui.clases.Usuario
+import com.kevinzamora.temporis_androidapp.R
+import com.kevinzamora.temporis_androidapp.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.kevinzamora.temporis_androidapp.ui.auth.login.LoginActivity
 import java.util.regex.Pattern
 
 class RegisterFragment : Fragment() {
@@ -34,7 +35,7 @@ class RegisterFragment : Fragment() {
 
 
         // Inflate the layout for this fragment
-        val root = inflater.inflate(R.layout.fragment_registro, container, false)
+        val root = inflater.inflate(R.layout.fragment_register, container, false)
 
         //para que el teclado no se vuelva loco
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
@@ -173,7 +174,7 @@ class RegisterFragment : Fragment() {
                             val id = auth.uid.toString()
                             val foto_predeterminada= "https://firebasestorage.googleapis.com/v0/b/tenisclubdroid.appspot.com/o/usuario.jpg?alt=media&token=b34680bc-64a9-4598-a734-8180aa5d2844"
                             //public Usuario(String nickName, String fotoPerfil, String descripcion, int rol)
-                            val u = Usuario(usuario, foto_predeterminada,"Tu descripcion",  0,id)
+                            val u = User(usuario, foto_predeterminada,"Tu descripcion",  0,id)
 
                             //lo guardamos
                             FirebaseAuth.getInstance().currentUser?.let { it1 ->

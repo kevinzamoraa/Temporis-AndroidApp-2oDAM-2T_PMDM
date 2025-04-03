@@ -1,4 +1,4 @@
-package com.example.tenisclubdroid.ui.Login
+package com.kevinzamora.temporis_androidapp.ui.auth.login
 
 import android.Manifest
 import android.content.Context
@@ -11,9 +11,10 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.tenisclubdroid.MainActivity
-import com.example.tenisclubdroid.R
-import com.example.tenisclubdroid.ui.clases.Usuario
+import com.example.tenisclubdroid.ui.Login.RegisterFragment
+import com.kevinzamora.temporis_androidapp.MainActivity
+import com.kevinzamora.temporis_androidapp.R
+import com.kevinzamora.temporis_androidapp.model.User
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -27,6 +28,7 @@ import com.karumi.dexter.listener.DexterError
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.PermissionRequestErrorListener
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import com.kevinzamora.temporis_androidapp.ui.auth.Login.ForgottenPassword
 import java.util.*
 
 class LoginActivity : AppCompatActivity() {
@@ -38,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        setSupportActionBar(findViewById(R.id.toolbar))
+        // setSupportActionBar(findViewById(R.id.toolbar))
 
         //declaraciones
         val btnLogin = this.findViewById<Button>(R.id.btnRegistroRegistrar)
@@ -162,7 +164,7 @@ class LoginActivity : AppCompatActivity() {
                                 val nickname = user?.displayName.toString()+ numerito.toString()
                                 val id = user?.uid.toString()
                                 val foto = user?.photoUrl.toString()
-                                val u = Usuario(nickname, foto, "Tu descripcion", 0, id)
+                                val u = User(nickname, foto, "Tu descripcion", 0, id)
                                 //se guarda en la base de datos
                                 progressBarLogin.setVisibility(View.GONE)
                                 FirebaseAuth.getInstance().currentUser?.let { it1 ->

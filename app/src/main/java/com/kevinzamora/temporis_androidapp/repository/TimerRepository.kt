@@ -3,10 +3,9 @@ package com.kevinzamora.temporis_androidapp.repository
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import timber.log.Timber
 import com.google.firebase.firestore.*
-import com.google.firebase.ktx.firestore
-import kotlinx.coroutines.flow.Result
+import com.kevinzamora.temporis_androidapp.model.Timer
+import kotlinx.coroutines.tasks.await
 
 class TimerRepository(private val db: FirebaseFirestore = FirebaseFirestore.getInstance()) {
     private val timersCollection = db.collection("timers")
@@ -21,6 +20,10 @@ class TimerRepository(private val db: FirebaseFirestore = FirebaseFirestore.getI
         } catch (e: Exception) {
             emit(Result.failure(e))
         }
+    }
+
+    private fun emit(value: Result<List<Timer?>>) {
+
     }
 
     fun createTimer(timer: Timer): Flow<Result<Boolean>> = flow {

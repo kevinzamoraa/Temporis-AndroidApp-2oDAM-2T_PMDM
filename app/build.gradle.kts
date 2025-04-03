@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.firestore.ktx)
+    implementation(libs.androidx.runner)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -71,13 +72,22 @@ dependencies {
 
     // UI
     implementation("androidx.recyclerview:recyclerview:1.3.0")
-    implementation("com.google.android.material:material:1.9.0")
+    implementation("com.google.android.material:material:1.10.0")
 
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.firebase:firebase-analytics-ktx")
+
+    implementation("com.google.android.gms:play-services-basement:17.5.0")
+
+    implementation("com.google.firebase:firebase-auth:18.0.0")
+    implementation("com.google.firebase:firebase-database:18.0.0")
+    implementation("com.google.firebase:firebase-storage:16.0.1")
+
+    implementation("com.karumi:dexter:6.0.0")
+    implementation("com.squareup.picasso:picasso:2.71828")
 
     // Google Sign-In
     implementation("com.google.android.gms:play-services-auth:20.3.0")
