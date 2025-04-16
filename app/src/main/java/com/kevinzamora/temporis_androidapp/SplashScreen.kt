@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class SplashScreen : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    /*override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
         //dejamos 3 segundos para cargar el splash screen
@@ -23,5 +23,5 @@ class SplashScreen : AppCompatActivity() {
                 startActivity(intent)
                 finish()
         }
-    }
+    }*/
 }
