@@ -1,5 +1,6 @@
 package com.kevinzamora.temporis_androidapp
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -7,7 +8,10 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.ads.mediationtestsuite.activities.HomeActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.kevinzamora.temporis_androidapp.databinding.ActivityMainBinding
+import com.kevinzamora.temporis_androidapp.ui.auth.login.LoginActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,6 +33,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
             )
         )
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
