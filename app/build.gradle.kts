@@ -83,6 +83,8 @@ dependencies {
 
     implementation("com.google.android.gms:play-services-basement:17.5.0")
 
+    implementation("com.google.android.gms:play-services-ads:18.2.0")
+
     implementation("com.google.firebase:firebase-auth:18.0.0")
     implementation("com.google.firebase:firebase-database:18.0.0")
     implementation("com.google.firebase:firebase-storage:16.0.1")

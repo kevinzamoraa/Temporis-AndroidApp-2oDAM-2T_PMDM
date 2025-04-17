@@ -143,56 +143,49 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+    private fun goToMain() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
+    }
+
+    private fun showToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
         if (requestCode == GOOGLE_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
-                val account = task.getResult(ApiException::class.java)
-                progressBarLogin.setVisibility(View.VISIBLE)
-                if (account != null) {
-                    val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-                    auth.signInWithCredential(credential)
-                        .addOnCompleteListener {
-                            if (it.isSuccessful) {
-                                //se recoge el usuario
-                                val user = auth.currentUser
-                                //para que su nombre tambien sea unico en nuestra app le añadimos un numero aleatorio
-                                val random = Random()
-                                val numerito = random.nextInt(0..100000)
+                val account = task.getResult(ApiException::class.java) ?: throw Exception("Cuenta nula")
+                val credential = GoogleAuthProvider.getCredential(account.idToken, null)
 
-                                val displayName = user?.displayName.toString()+ numerito.toString()
-                                val uid = user?.uid.toString()
-                                val foto = user?.photoUrl.toString()
-                                val u = User(displayName, displayName, foto, "Tu descripcion", 0, uid)
-                                //se guarda en la base de datos
-                                progressBarLogin.setVisibility(View.GONE)
-                                auth.currentUser?.let { it1 ->
-                                    FirebaseDatabase.getInstance("https://tenisclubdroid-default-rtdb.europe-west1.firebasedatabase.app/")
-                                        .getReference("usuarios").child(
-                                            it1.uid
-                                        ).setValue(u).addOnCompleteListener {
+                auth.signInWithCredential(credential)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            val user = auth.currentUser
+                            val uid = user?.uid.orEmpty()
+                            val nombre = user?.displayName ?: "Sin nombre"
+                            val foto = user?.photoUrl?.toString() ?: ""
+                            val userDB = User(nombre, nombre, foto, "Tu descripción", 0, uid)
 
-                                        }
-                                }
+                            FirebaseDatabase.getInstance("https://tenisclubdroid-default-rtdb.europe-west1.firebasedatabase.app/")
+                                .getReference("usuarios").child(uid).setValue(userDB)
 
-                                val intent = Intent(this, MainActivity::class.java)
-                                startActivity(intent)
-                                finish()
-
-                            } else {
-                                //Toast.makeText(this, "Error de acceso", Toast.LENGTH_SHORT).show()
-                                progressBarLogin.setVisibility(View.GONE)
-                            }
+                            goToMain()
+                        } else {
+                            showToast("Error al iniciar sesión con Google")
                         }
-
-                }
-            } catch (e: ApiException) {
-                Toast.makeText(this, "Error, revisa tu internet", Toast.LENGTH_SHORT).show()
+                    }
+            } catch (e: Exception) {
+                showToast("Error de autenticación: ${e.message}")
+            } finally {
+                progressBarLogin.visibility = View.GONE
             }
-
         }
     }
+
     fun Random.nextInt(range: IntRange): Int {
         return range.start + nextInt(range.last - range.start)
     }
