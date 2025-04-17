@@ -1,8 +1,9 @@
 <resources>
     <!-- Textos generales -->
     <string name="app_name">Temporis</string>
-    <string name="title_home">Inicio</string>
-    <string name="title_timer">Temporizadores</string>
+    <string name="title_profile">Usuario</string>
+    <string name="title_home">Temporizadores</string>
+    <string name="title_goout">Salir</string>
     <string name="title_notifications">Notificaciones</string>
     <color name="logo_background">#FFFBFD</color>
 
