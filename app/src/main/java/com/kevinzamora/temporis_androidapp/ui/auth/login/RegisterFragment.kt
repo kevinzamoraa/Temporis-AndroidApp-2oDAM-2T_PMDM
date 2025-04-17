@@ -174,7 +174,7 @@ class RegisterFragment : Fragment() {
                             val id = auth.uid.toString()
                             val foto_predeterminada= "https://firebasestorage.googleapis.com/v0/b/tenisclubdroid.appspot.com/o/usuario.jpg?alt=media&token=b34680bc-64a9-4598-a734-8180aa5d2844"
                             //public Usuario(String nickName, String fotoPerfil, String descripcion, int rol)
-                            val u = User(usuario, foto_predeterminada,"Tu descripcion",  0,id)
+                            val u = User(usuario, usuario, foto_predeterminada,"Tu descripcion",  0,id)
 
                             //lo guardamos
                             FirebaseAuth.getInstance().currentUser?.let { it1 ->

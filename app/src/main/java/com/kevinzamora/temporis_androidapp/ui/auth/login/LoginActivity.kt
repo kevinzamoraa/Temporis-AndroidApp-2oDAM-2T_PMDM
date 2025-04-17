@@ -152,22 +152,22 @@ class LoginActivity : AppCompatActivity() {
                 progressBarLogin.setVisibility(View.VISIBLE)
                 if (account != null) {
                     val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-                    FirebaseAuth.getInstance().signInWithCredential(credential)
+                    auth.signInWithCredential(credential)
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
                                 //se recoge el usuario
-                                val user = FirebaseAuth.getInstance().currentUser
+                                val user = auth.currentUser
                                 //para que su nombre tambien sea unico en nuestra app le añadimos un numero aleatorio
                                 val random = Random()
                                 val numerito = random.nextInt(0..100000)
 
-                                val nickname = user?.displayName.toString()+ numerito.toString()
-                                val id = user?.uid.toString()
+                                val displayName = user?.displayName.toString()+ numerito.toString()
+                                val uid = user?.uid.toString()
                                 val foto = user?.photoUrl.toString()
-                                val u = User(nickname, foto, "Tu descripcion", 0, id)
+                                val u = User(displayName, displayName, foto, "Tu descripcion", 0, uid)
                                 //se guarda en la base de datos
                                 progressBarLogin.setVisibility(View.GONE)
-                                FirebaseAuth.getInstance().currentUser?.let { it1 ->
+                                auth.currentUser?.let { it1 ->
                                     FirebaseDatabase.getInstance("https://tenisclubdroid-default-rtdb.europe-west1.firebasedatabase.app/")
                                         .getReference("usuarios").child(
                                             it1.uid

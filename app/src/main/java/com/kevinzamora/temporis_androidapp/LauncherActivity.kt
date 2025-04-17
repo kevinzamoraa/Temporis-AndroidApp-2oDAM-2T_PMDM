@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.kevinzamora.temporis_androidapp.ui.auth.login.LoginActivity
+import com.kevinzamora.temporis_androidapp.ui.home.HomeActivity
+import com.kevinzamora.temporis_androidapp.ui.timer.TimerActivity
 
 class LauncherActivity : AppCompatActivity() {
 
@@ -15,7 +17,7 @@ class LauncherActivity : AppCompatActivity() {
         val currentUser = FirebaseAuth.getInstance().currentUser
 
         val nextActivity = if (currentUser != null) {
-            Intent(this, MainActivity::class.java)
+            Intent(this, HomeActivity::class.java)
         } else {
             Intent(this, LoginActivity::class.java)
         }

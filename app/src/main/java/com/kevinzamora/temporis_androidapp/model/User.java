@@ -4,33 +4,36 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
-        private String nickName,email,password,fotoPerfil,codigoQr,idUser,descripcion;
+        private String name, displayName, email,password,profilePhoto,QrCode,uid,description;
         private int rol;
 
 
-        public User(String nickName, String email, String password, String fotoPerfil, String idUser,int rol) {
-            this.nickName = nickName;
+        public User(String name, String displayName, String email, String password, String profilePhoto, String uid,int rol) {
+            this.name = name;
+            this.displayName = displayName;
             this.email = email;
             this.password = password;
-            this.fotoPerfil = fotoPerfil;
-            this.idUser = idUser;
+            this.profilePhoto = profilePhoto;
+            this.uid = uid;
             this.rol=rol;
         }
 
-        public User(String nickName, String email, String password,String idUser, int rol) {
-            this.nickName = nickName;
-            this.idUser= idUser;
+        public User(String name, String displayName, String email, String password,String uid, int rol) {
+            this.name = name;
+            this.displayName = displayName;
+            this.uid= uid;
             this.email = email;
             this.password = password;
             this.rol = rol;
         }
 
-        public User(String nickName, String fotoPerfil, String descripcion, int rol, String idUser) {
-            this.nickName = nickName;
-            this.fotoPerfil = fotoPerfil;
-            this.descripcion = descripcion;
+        public User(String name, String displayName, String profilePhoto, String description, int rol, String uid) {
+            this.name = name;
+            this.displayName = displayName;
+            this.profilePhoto = profilePhoto;
+            this.description = description;
             this.rol= rol;
-            this.idUser=idUser;
+            this.uid=uid;
         }
 
 
@@ -39,19 +42,19 @@ public class User implements Serializable {
         }
 
         public String getDescripcion() {
-            return descripcion;
+            return description;
         }
 
-        public void setDescripcion(String descripcion) {
-            this.descripcion = descripcion;
+        public void setDescripcion(String description) {
+            this.description = description;
         }
 
-        public String getNickName() {
-            return nickName;
+        public String getName() {
+            return name;
         }
 
-        public void setNickName(String nickName) {
-            this.nickName = nickName;
+        public void setName(String name) {
+            this.name = name;
         }
 
 
@@ -71,28 +74,28 @@ public class User implements Serializable {
             this.password = password;
         }
 
-        public String getFotoPerfil() {
-            return fotoPerfil;
+        public String getProfilePhoto() {
+            return profilePhoto;
         }
 
-        public void setFotoPerfil(String fotoPerfil) {
-            this.fotoPerfil = fotoPerfil;
+        public void setProfilePhoto(String profilePhoto) {
+            this.profilePhoto = profilePhoto;
         }
 
-        public String getCodigoQr() {
-            return codigoQr;
+        public String getQrCode() {
+            return QrCode;
         }
 
-        public void setCodigoQr(String codigoQr) {
-            this.codigoQr = codigoQr;
+        public void setQrCode(String QrCode) {
+            this.QrCode = QrCode;
         }
 
-        public String getIdUser() {
-            return idUser;
+        public String getUid() {
+            return uid;
         }
 
-        public void setIdUser(String idUser) {
-            this.idUser = idUser;
+        public void setUid(String uid) {
+            this.uid = uid;
         }
 
         public int getRol() {
@@ -106,12 +109,13 @@ public class User implements Serializable {
         @Override
         public String toString() {
             return "User{" +
-                    "nickName='" + nickName + '\'' +
+                    "name='" + name + '\'' +
+                    "displayName='" + displayName + '\'' +
                     ", email='" + email + '\'' +
                     ", password='" + password + '\'' +
-                    ", fotoPerfil='" + fotoPerfil + '\'' +
-                    ", codigoQr='" + codigoQr + '\'' +
-                    ", idUser=" + idUser +
+                    ", profilePhoto='" + profilePhoto + '\'' +
+                    ", QrCode='" + QrCode + '\'' +
+                    ", uid=" + uid +
                     ", rol=" + rol +
                     '}';
         }
