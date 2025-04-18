@@ -1,43 +1,46 @@
 package com.kevinzamora.temporis_androidapp.repository
 
+import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import com.google.firebase.firestore.*
-import com.kevinzamora.temporis_androidapp.model.Timer
 import kotlinx.coroutines.tasks.await
+import com.kevinzamora.temporis_androidapp.model.Timer
 
 class TimerRepository(private val db: FirebaseFirestore = FirebaseFirestore.getInstance()) {
-    private val timersCollection = db.collection("timers")
+    private val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+    private val timersCollection = db.collection("users").document(userId).collection("timers")
 
-    fun getTimers(): Flow<Result<List<Timer>>> = flow {
-        try {
-            val snapshot = timersCollection.get().await()
+    fun createTimer(name: String, duration: Int, onSuccess: () -> Unit) {
+        val timer = hashMapOf(
+            "name" to name,
+            "duration" to duration,
+            "isActive" to false,
+            "createdAt" to FieldValue.serverTimestamp()
+        )
+        timersCollection.add(timer).addOnSuccessListener { onSuccess() }
+    }
+
+    fun getTimers(onComplete: (List<Timer>) -> Unit) {
+        timersCollection.get().addOnSuccessListener { snapshot ->
             val timers = snapshot.documents.map { doc ->
-                doc.toObject(Timer::class.java)
+                Timer(
+                    doc.id,
+                    doc.getString("name") ?: "",
+                    doc.getLong("duration") ?: 0,
+                    doc.getBoolean("isActive") ?: false,
+                    doc.getTimestamp("createdAt") ?: Timestamp.now()
+                )
             }
-            emit(Result.success(timers))
-        } catch (e: Exception) {
-            emit(Result.failure(e))
-        }
-    }
-
-    private fun emit(value: Result<List<Timer?>>) {
-
-    }
-
-    fun createTimer(timer: Timer): Flow<Result<Boolean>> = flow {
-        try {
-            timersCollection.document(timer.id).set(timer).await()
-            emit(Result.success(true))
-        } catch (e: Exception) {
-            emit(Result.failure(e))
+            onComplete(timers)
         }
     }
 
     fun updateTimer(timer: Timer): Flow<Result<Boolean>> = flow {
         try {
-            timersCollection.document(timer.id).set(timer, SetOptions.merge()).await()
+            timersCollection.document(timer.id).set(timer).await()
             emit(Result.success(true))
         } catch (e: Exception) {
             emit(Result.failure(e))

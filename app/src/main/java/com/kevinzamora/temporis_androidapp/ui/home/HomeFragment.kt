@@ -1,36 +1,53 @@
 package com.kevinzamora.temporis_androidapp.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.kevinzamora.temporis_androidapp.R
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import android.view.*
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.kevinzamora.temporis_androidapp.databinding.FragmentHomeBinding
+import com.kevinzamora.temporis_androidapp.repository.TimerRepository
+import com.kevinzamora.temporis_androidapp.ui.timer.TimerAdapter
 
 class HomeFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var binding: FragmentHomeBinding
+    private lateinit var adapter: TimerAdapter
+    private val repo = TimerRepository()
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
+        adapter = TimerAdapter()
+        binding.recyclerViewTimers.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerViewTimers.adapter = adapter
 
-        })
+        binding.buttonCreateTimer.setOnClickListener {
+            val name = binding.editTextTimerName.text.toString().trim()
+            val duration = binding.editTextTimerDuration.text.toString().toIntOrNull()
 
-        return root
+            if (name.isNotEmpty() && duration != null) {
+                repo.createTimer(name, duration) {
+                    loadTimers()
+                    Toast.makeText(requireContext(), "Temporizador creado", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(requireContext(), "Introduce nombre y duración válidos", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        loadTimers()
+
+        return binding.root
+    }
+
+    private fun loadTimers() {
+        repo.getTimers { timers ->
+            adapter.submitList(timers)
+        }
     }
 }
