@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.dashboardFragment3, R.id.goOut
+                R.id.navigation_home, R.id.dashboardFragment3, R.id.logout
             )
         )
 
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.dashboardFragment3)
                     true
                 }
-                R.id.goOut -> {
+                R.id.logout -> {
                     // Cerramos sesión en Firebase
                     FirebaseAuth.getInstance().signOut()
 

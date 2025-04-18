@@ -12,7 +12,7 @@
         android:title="@string/title_profile" />
 
     <item
-        android:id="@+id/goOut"
+        android:id="@+id/logout"
         android:icon="@drawable/ic_cerrarsesion"
         android:title="@string/title_goout" />
 
