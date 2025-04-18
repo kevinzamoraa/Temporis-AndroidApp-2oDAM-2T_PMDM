@@ -2,6 +2,7 @@ package com.kevinzamora.temporis_androidapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -12,7 +13,6 @@ import com.google.android.ads.mediationtestsuite.activities.HomeActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.kevinzamora.temporis_androidapp.databinding.ActivityMainBinding
 import com.kevinzamora.temporis_androidapp.ui.auth.login.LoginActivity
-import androidx.navigation.findNavController
 
 
 class MainActivity : AppCompatActivity() {
@@ -28,8 +28,6 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_home, R.id.dashboardFragment3, R.id.logout
@@ -48,13 +46,11 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.logout -> {
-                    // Cerramos sesión en Firebase
+                    Toast.makeText(this, "Cerrando sesión...", Toast.LENGTH_SHORT).show()
                     FirebaseAuth.getInstance().signOut()
-
-                    // Lanzamos el LoginActivity limpiando la pila
                     val intent = Intent(this, LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
-                    finish()
                     true
                 }
                 else -> false

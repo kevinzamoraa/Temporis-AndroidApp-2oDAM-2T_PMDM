@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.auth.FirebaseAuth
 import com.kevinzamora.temporis_androidapp.databinding.FragmentDashboardBinding
 
 class DashboardFragment : Fragment() {
@@ -28,7 +29,12 @@ class DashboardFragment : Fragment() {
             _binding = FragmentDashboardBinding.inflate(inflater, container, false)
             val root: View = binding.root
 
-            return root
+        val user = FirebaseAuth.getInstance().currentUser
+
+        binding.etUsuario.setText(user?.displayName ?: "")
+        binding.etEmail.setText(user?.email ?: "")
+
+        return root
     }
 
     override fun onDestroyView() {
