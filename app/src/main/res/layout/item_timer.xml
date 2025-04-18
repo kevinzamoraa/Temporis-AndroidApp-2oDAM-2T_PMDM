@@ -38,6 +38,15 @@
             android:layout_height="wrap_content"
             android:text="Creado el" />
 
+        <TextView
+            android:id="@+id/textViewCountdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:paddingTop="8dp" />
+
         <!-- Botones alineados al centro y con separación -->
         <LinearLayout
             android:layout_width="match_parent"

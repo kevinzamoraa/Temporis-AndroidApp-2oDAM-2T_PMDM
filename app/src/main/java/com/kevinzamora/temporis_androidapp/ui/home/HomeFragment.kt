@@ -2,7 +2,6 @@ package com.kevinzamora.temporis_androidapp.ui.home
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -76,6 +75,13 @@ class HomeFragment : Fragment() {
             }
         }
 
+        adapter.onEditClick = { timer ->
+            editingTimerId = timer.id
+            binding.editTextTimerName.setText(timer.name)
+            binding.editTextTimerDuration.setText(timer.duration.toString())
+            binding.buttonCreateTimer.text = "Actualizar temporizador"
+        }
+
         adapter.onDeleteClick = { timer ->
             AlertDialog.Builder(requireContext())
                 .setTitle("Eliminar temporizador")
@@ -89,21 +95,7 @@ class HomeFragment : Fragment() {
         }
 
         adapter.onPlayClick = { timer ->
-            val durationInMillis = timer.duration * 60 * 1000L
-
             Toast.makeText(requireContext(), "Temporizador iniciado: ${timer.name}", Toast.LENGTH_SHORT).show()
-
-            object : CountDownTimer(durationInMillis, 1000) {
-                override fun onTick(millisUntilFinished: Long) {
-                    val seconds = (millisUntilFinished / 1000) % 60
-                    val minutes = (millisUntilFinished / 1000) / 60
-                    println("Tiempo restante: $minutes:${"%02d".format(seconds)}")
-                }
-
-                override fun onFinish() {
-                    Toast.makeText(requireContext(), "¡Temporizador ${timer.name} finalizado!", Toast.LENGTH_SHORT).show()
-                }
-            }.start()
         }
 
         // Observar los temporizadores
