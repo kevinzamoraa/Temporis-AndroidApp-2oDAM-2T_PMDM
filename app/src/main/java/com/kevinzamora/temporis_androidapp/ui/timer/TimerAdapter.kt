@@ -16,31 +16,67 @@ class TimerAdapter : ListAdapter<Timer, TimerAdapter.TimerViewHolder>(DiffCallba
     var onPlayClick: ((Timer) -> Unit)? = null
     var onEditClick: ((Timer) -> Unit)? = null
     var onDeleteClick: ((Timer) -> Unit)? = null
+
     private val activeTimers = mutableMapOf<String, CountDownTimer>()
+    private val remainingTimes = mutableMapOf<String, Long>() // Tiempo restante en ms
+    private val pausedStates = mutableMapOf<String, Boolean>() // true = pausado
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimerViewHolder {
-        val binding = ItemTimerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return TimerViewHolder(binding)
+    inner class TimerViewHolder(val binding: ItemTimerBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(timer: Timer) {
+            binding.timerName.text = timer.name
+            binding.timerDuration.text = "${timer.duration} min"
+            binding.timerStatus.text = if (timer.isActive) "Activo" else "Inactivo"
+            binding.timerCreatedAt.text = "Creado el: ${
+                SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(timer.createdAt.toDate())
+            }"
+
+            binding.textViewCountdown.text = "00:00"
+            binding.btnEdit.setOnClickListener { onEditClick?.invoke(timer) }
+            binding.btnDelete.setOnClickListener { onDeleteClick?.invoke(timer) }
+
+            binding.btnPlay.setOnClickListener {
+                val isPaused = pausedStates[timer.id] ?: false
+                if (activeTimers.containsKey(timer.id)) {
+                    if (!isPaused) {
+                        // Pausar
+                        activeTimers[timer.id]?.cancel()
+                        pausedStates[timer.id] = true
+                    } else {
+                        // Reanudar
+                        val remaining = remainingTimes[timer.id] ?: timer.duration * 60 * 1000L
+                        startCountdown(timer, this@TimerViewHolder, remaining)
+                        pausedStates[timer.id] = false
+                    }
+                } else {
+                    // Iniciar por primera vez
+                    startCountdown(timer, this@TimerViewHolder, timer.duration * 60 * 1000L)
+                    pausedStates[timer.id] = false
+                }
+
+                onPlayClick?.invoke(timer)
+            }
+        }
     }
 
-    override fun onBindViewHolder(holder: TimerViewHolder, position: Int) {
-        holder.bind(getItem(position))
-    }
-
-    fun startCountdown(timer: Timer, holder: TimerViewHolder) {
-        val durationInMillis = timer.duration * 60 * 1000L
-
+    fun startCountdown(timer: Timer, holder: TimerViewHolder, durationInMillis: Long) {
         activeTimers[timer.id]?.cancel()
 
         val countdown = object : CountDownTimer(durationInMillis, 1000) {
+            var millisRemaining = durationInMillis
+
             override fun onTick(millisUntilFinished: Long) {
-                val minutes = (millisUntilFinished / 1000) / 60
-                val seconds = (millisUntilFinished / 1000) % 60
+                millisRemaining = millisUntilFinished
+                remainingTimes[timer.id] = millisRemaining
+
+                val minutes = (millisRemaining / 1000) / 60
+                val seconds = (millisRemaining / 1000) % 60
                 holder.binding.textViewCountdown.text = String.format("%02d:%02d", minutes, seconds)
             }
 
             override fun onFinish() {
                 holder.binding.textViewCountdown.text = "00:00"
+                activeTimers.remove(timer.id)
+                pausedStates[timer.id] = false
             }
         }
 
@@ -48,32 +84,18 @@ class TimerAdapter : ListAdapter<Timer, TimerAdapter.TimerViewHolder>(DiffCallba
         countdown.start()
     }
 
-    inner class TimerViewHolder(val binding: ItemTimerBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(timer: Timer) {
-            binding.timerName.text = timer.name
-            binding.timerDuration.text = "${timer.duration} min"
-
-            // Nuevo: mostrar estado y fecha de creación
-            binding.timerStatus.text = if (timer.isActive) "Activo" else "Inactivo"
-            binding.timerCreatedAt.text = "Creado el: ${
-                SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(timer.createdAt.toDate())
-            }"
-
-            // Reinicia el texto del contador
-            binding.textViewCountdown.text = "00:00"
-
-            binding.btnEdit.setOnClickListener { onEditClick?.invoke(timer) }
-            binding.btnDelete.setOnClickListener { onDeleteClick?.invoke(timer) }
-            binding.btnPlay.setOnClickListener {
-                startCountdown(timer, this@TimerViewHolder) // Pasamos el ViewHolder actual
-                onPlayClick?.invoke(timer)
-            }
-        }
-    }
-
-
     class DiffCallback : DiffUtil.ItemCallback<Timer>() {
         override fun areItemsTheSame(oldItem: Timer, newItem: Timer) = oldItem.id == newItem.id
         override fun areContentsTheSame(oldItem: Timer, newItem: Timer) = oldItem == newItem
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimerViewHolder {
+        val binding = ItemTimerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return TimerViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: TimerViewHolder, position: Int) {
+        val timer = getItem(position)
+        holder.bind(timer)
     }
 }
