@@ -23,6 +23,6 @@
     <fragment
         android:id="@+id/dashboardFragment3"
         android:name="com.kevinzamora.temporis_androidapp.ui.dashboard.DashboardFragment"
-        android:label="fragment_dashboard"
+        android:label="Perfil de usuario"
         tools:layout="@layout/fragment_dashboard" />
 </navigation>
