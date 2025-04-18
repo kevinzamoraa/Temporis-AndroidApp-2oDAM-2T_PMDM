@@ -20,4 +20,9 @@
         android:id="@+id/navigation_forgotten_password"
         android:name="com.kevinzamora.temporis_androidapp.ui.auth.forgotten_password.ForgotPasswordFragment"
         android:label="ForgottenPassword" />
+    <fragment
+        android:id="@+id/dashboardFragment3"
+        android:name="com.kevinzamora.temporis_androidapp.ui.dashboard.DashboardFragment"
+        android:label="fragment_dashboard"
+        tools:layout="@layout/fragment_dashboard" />
 </navigation>

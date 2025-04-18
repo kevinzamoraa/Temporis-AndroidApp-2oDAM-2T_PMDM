@@ -12,6 +12,8 @@ import com.google.android.ads.mediationtestsuite.activities.HomeActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.kevinzamora.temporis_androidapp.databinding.ActivityMainBinding
 import com.kevinzamora.temporis_androidapp.ui.auth.login.LoginActivity
+import androidx.navigation.findNavController
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,17 +26,41 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navView: BottomNavigationView = binding.navView
-
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.navigation_home, R.id.dashboardFragment3, R.id.goOut
             )
         )
 
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        //setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home -> {
+                    navController.navigate(R.id.navigation_home)
+                    true
+                }
+                R.id.dashboardFragment3 -> {
+                    navController.navigate(R.id.dashboardFragment3)
+                    true
+                }
+                R.id.goOut -> {
+                    // Cerramos sesión en Firebase
+                    FirebaseAuth.getInstance().signOut()
+
+                    // Lanzamos el LoginActivity limpiando la pila
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                else -> false
+            }
+        }
+
+
     }
 }
