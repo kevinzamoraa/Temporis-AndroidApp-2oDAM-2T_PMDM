@@ -4,22 +4,22 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
-        private String name, displayName, email,password,profilePhoto,QrCode,uid,description;
+        private String username, displayName, email,password,profilePhotoUrl,QrCode,uid,description;
         private int rol;
 
 
-        public User(String name, String displayName, String email, String password, String profilePhoto, String uid,int rol) {
-            this.name = name;
+        public User(String username, String displayName, String email, String password, String profilePhotoUrl, String uid,int rol) {
+            this.username = username;
             this.displayName = displayName;
             this.email = email;
             this.password = password;
-            this.profilePhoto = profilePhoto;
+            this.profilePhotoUrl = profilePhotoUrl;
             this.uid = uid;
             this.rol=rol;
         }
 
-        public User(String name, String displayName, String email, String password,String uid, int rol) {
-            this.name = name;
+        public User(String username, String displayName, String email, String password,String uid, int rol) {
+            this.username = username;
             this.displayName = displayName;
             this.uid= uid;
             this.email = email;
@@ -27,17 +27,27 @@ public class User implements Serializable {
             this.rol = rol;
         }
 
-        public User(String name, String displayName, String profilePhoto, String description, int rol, String uid) {
-            this.name = name;
+        public User(String username, String displayName, String profilePhotoUrl, String description, int rol, String uid) {
+            this.username = username;
             this.displayName = displayName;
-            this.profilePhoto = profilePhoto;
+            this.profilePhotoUrl = profilePhotoUrl;
             this.description = description;
             this.rol= rol;
             this.uid=uid;
         }
 
+    public User(String uid, String username, String email, String displayName, String description, String profilePhotoUrl) {
+        this.uid = uid;
+        this.username = username;
+        this.email = email;
+        this.displayName = displayName;
+        this.description = description;
+        this.profilePhotoUrl = profilePhotoUrl;
+    }
 
-        public User(){
+
+
+    public User(){
 
         }
 
@@ -50,11 +60,11 @@ public class User implements Serializable {
         }
 
         public String getName() {
-            return name;
+            return username;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void setName(String username) {
+            this.username = username;
         }
 
 
@@ -75,11 +85,11 @@ public class User implements Serializable {
         }
 
         public String getProfilePhoto() {
-            return profilePhoto;
+            return profilePhotoUrl;
         }
 
-        public void setProfilePhoto(String profilePhoto) {
-            this.profilePhoto = profilePhoto;
+        public void setProfilePhoto(String profilePhotoUrl) {
+            this.profilePhotoUrl = profilePhotoUrl;
         }
 
         public String getQrCode() {
@@ -109,11 +119,11 @@ public class User implements Serializable {
         @Override
         public String toString() {
             return "User{" +
-                    "name='" + name + '\'' +
+                    "username='" + username + '\'' +
                     "displayName='" + displayName + '\'' +
                     ", email='" + email + '\'' +
                     ", password='" + password + '\'' +
-                    ", profilePhoto='" + profilePhoto + '\'' +
+                    ", profilePhotoUrl='" + profilePhotoUrl + '\'' +
                     ", QrCode='" + QrCode + '\'' +
                     ", uid=" + uid +
                     ", rol=" + rol +
