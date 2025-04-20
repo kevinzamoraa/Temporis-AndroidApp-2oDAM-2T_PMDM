@@ -169,7 +169,7 @@ class LoginActivity : AppCompatActivity() {
                             val displayName = user?.displayName ?: "Sin nombre a mostrar"
                             val email = user?.email ?: "prueba@prueba.es"
                             val photo = user?.photoUrl?.toString() ?: "/SinFoto/"
-                            val userDB = User(uid, displayName, email, displayName, "Tu descripción", photo)
+                            val userDB = User(uid, displayName, email, displayName/*, "Tu descripción"*/, photo)
 
                             FirebaseDatabase.getInstance("https://tenisclubdroid-default-rtdb.europe-west1.firebasedatabase.app/")
                                 .getReference("usuarios").child(uid).setValue(userDB)

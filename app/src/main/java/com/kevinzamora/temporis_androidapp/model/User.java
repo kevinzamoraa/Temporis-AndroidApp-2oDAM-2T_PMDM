@@ -4,19 +4,19 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
-    private String username, displayName, email,password,profilePhotoUrl,QrCode,uid,description;
+    private String username, displayName, email,password,profilePhotoUrl,QrCode,uid/*,description*/;
     private int rol;
 
     public User(){
 
     }
 
-    public User(String uid, String username, String email, String displayName, String description, String profilePhotoUrl) {
+    public User(String uid, String username, String email, String displayName, /*String description,*/ String profilePhotoUrl) {
         this.uid = uid;
         this.username = username;
         this.email = email;
         this.displayName = displayName;
-        this.description = description;
+        /*this.description = description;*/
         this.profilePhotoUrl = profilePhotoUrl;
     }
 
@@ -38,9 +38,9 @@ public class User implements Serializable {
 
     public void setDisplayName(String displayName) { this.displayName = displayName; }
 
-    public String getDescription() { return description; }
+   /* public String getDescription() { return description; }
 
-    public void setDescription(String description) { this.description = description; }
+    public void setDescription(String description) { this.description = description; }*/
 
     public String getProfilePhotoUrl() { return profilePhotoUrl; }
 
@@ -69,7 +69,7 @@ public class User implements Serializable {
                 ", QrCode='" + QrCode + '\'' +
                 ", uid=" + uid +
                 ", rol=" + rol +
-                ", decription=" + description +
+                /*", decription=" + description +*/
                 '}';
     }
 }

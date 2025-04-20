@@ -58,7 +58,7 @@ class DashboardFragment : Fragment() {
                     binding.etUsername.setText(it.username)
                     binding.etDisplayName.setText(it.displayName)
                     binding.etEmail.setText(it.email)
-                    binding.etDescription.setText(it.description)
+                    /*binding.etDescription.setText(it.description)*/
                     binding.etProfileUrl.setText(it.profilePhotoUrl)
                     Glide.with(requireContext())
                         .load(it.profilePhotoUrl)
@@ -78,7 +78,7 @@ class DashboardFragment : Fragment() {
                 binding.etUsername.text.toString(),
                 user?.email ?: "",
                 binding.etDisplayName.text.toString(),
-                binding.etDescription.text.toString(),
+                /*binding.etDescription.text.toString(),*/
                 binding.etProfileUrl.text.toString()
             )
 

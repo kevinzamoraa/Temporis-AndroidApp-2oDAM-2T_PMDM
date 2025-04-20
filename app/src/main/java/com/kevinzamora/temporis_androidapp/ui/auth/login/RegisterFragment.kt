@@ -174,7 +174,7 @@ class RegisterFragment : Fragment() {
                             val uid = auth.uid.toString()
                             val photo= "https://img.freepik.com/premium-vector/gamer-man_961307-25037.jpg?semt=ais_hybrid&w=740"
                             //public Usuario(String nickName, String fotoPerfil, String descripcion, int rol)
-                            val u = User(uid, username, email, username, "Tu descripcion", photo)
+                            val u = User(uid, username, email, username/*, "Tu descripcion"*/, photo)
 
                             //lo guardamos
                             FirebaseAuth.getInstance().currentUser?.let { it1 ->
