@@ -35,6 +35,14 @@ class DashboardFragment : Fragment() {
         val userId = user?.uid ?: return root
 
         binding.etEmail.setText(user.email)
+        binding.etUsername.setText(user.displayName?.replace("\\s+".toRegex(), ""))
+        binding.etDisplayName.setText(user.displayName)
+        binding.etProfileUrl.setText(user.photoUrl.toString())
+        Glide.with(requireContext())
+            .load(user.photoUrl)
+            .placeholder(R.drawable.ic_default_profile)
+            .circleCrop()
+            .into(binding.imgProfilePhoto)
 
         // Cargar datos desde Firestore
         lifecycleScope.launch {
@@ -47,10 +55,10 @@ class DashboardFragment : Fragment() {
 
                 val userData = snapshot.toObject(User::class.java)
                 userData?.let {
-                    binding.etUsuario.setText(it.username)
+                    binding.etUsername.setText(it.username)
                     binding.etDisplayName.setText(it.displayName)
                     binding.etEmail.setText(it.email)
-                    binding.etDescripcion.setText(it.description)
+                    binding.etDescription.setText(it.description)
                     binding.etProfileUrl.setText(it.profilePhotoUrl)
                     Glide.with(requireContext())
                         .load(it.profilePhotoUrl)
@@ -64,13 +72,13 @@ class DashboardFragment : Fragment() {
         }
 
         // Guardar cambios en Firestore
-        binding.btnGuardar.setOnClickListener {
+        binding.btnSafe.setOnClickListener {
             val updatedUser = User(
                 userId,
-                binding.etUsuario.text.toString(),
+                binding.etUsername.text.toString(),
                 user?.email ?: "",
                 binding.etDisplayName.text.toString(),
-                binding.etDescripcion.text.toString(),
+                binding.etDescription.text.toString(),
                 binding.etProfileUrl.text.toString()
             )
 

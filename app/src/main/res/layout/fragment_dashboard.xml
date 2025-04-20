@@ -37,7 +37,7 @@
 
             <!-- Nombre de usuario -->
             <EditText
-                android:id="@+id/etUsuario"
+                android:id="@+id/etUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nombre de usuario" />
@@ -51,7 +51,7 @@
 
             <!-- Descripción -->
             <EditText
-                android:id="@+id/etDescripcion"
+                android:id="@+id/etDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Descripción personal"
@@ -67,7 +67,7 @@
 
             <!-- Botón para guardar -->
             <Button
-                android:id="@+id/btnGuardar"
+                android:id="@+id/btnSafe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Guardar cambios"

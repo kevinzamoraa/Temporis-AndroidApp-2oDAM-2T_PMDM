@@ -23,7 +23,7 @@ import java.util.regex.Pattern
 class RegisterFragment : Fragment() {
 
     private lateinit var databaseReference: DatabaseReference
-    private lateinit var nombresCogidos: DatabaseReference
+    private lateinit var takenNames: DatabaseReference
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
 
@@ -52,21 +52,21 @@ class RegisterFragment : Fragment() {
             FirebaseDatabase.getInstance("https://tenisclubdroid-default-rtdb.europe-west1.firebasedatabase.app/")
 
 
-        databaseReference = database.reference.child("usuarios")
-        nombresCogidos = database.reference.child("NombresCogidos")
+        databaseReference = database.reference.child("users")
+        takenNames = database.reference.child("NombresCogidos")
 
 
 
         btnRegistrar.setOnClickListener(View.OnClickListener {
 
             var email = etRegistroEmail.text.toString()
-            var contra = etRegistroContra.text.toString()
-            var confirm_contra = etRegistroConfirmContra.text.toString()
-            var usuario = etRegistroUserName.text.toString()
+            var password = etRegistroContra.text.toString()
+            var confirm_password = etRegistroConfirmContra.text.toString()
+            var username = etRegistroUserName.text.toString()
 
 
             //se comprueba que todos los campos esten rellenos
-            if (!email.isEmpty() && !contra.isEmpty() && !confirm_contra.isEmpty() && !usuario.isEmpty()) {
+            if (!email.isEmpty() && !password.isEmpty() && !confirm_password.isEmpty() && !username.isEmpty()) {
                 //se comprueba que el email tiene un formato correcto
                 if (comprobarEmail(email.trim())) {
                     etRegistroEmail.setBackgroundTintList(activity?.applicationContext?.let { it1 ->
@@ -75,7 +75,7 @@ class RegisterFragment : Fragment() {
                         )
                     })
                     //se comprueba que la contraseña es de al menos 6 caracteres
-                    if (contra.trim().length >= 6) {
+                    if (password.trim().length >= 6) {
                         etRegistroContra.setBackgroundTintList(activity?.applicationContext?.let { it1 ->
                             ContextCompat.getColorStateList(
                                 it1, R.color.background_tint_azul
@@ -83,7 +83,7 @@ class RegisterFragment : Fragment() {
                         })
 
                         //se comprueba que la contraseña es correcta
-                        if (contra.trim().equals(confirm_contra)) {
+                        if (password.trim().equals(confirm_password)) {
 
                             etRegistroConfirmContra.setBackgroundTintList(activity?.applicationContext?.let { it1 ->
                                 ContextCompat.getColorStateList(
@@ -93,7 +93,7 @@ class RegisterFragment : Fragment() {
 
 
                             //se han pasado los filtros y se crea la cuenta con el email y la contraseña
-                            registrar(usuario, email, contra)
+                            registrar(username, email, password)
 
                         } else {
                             val toast1 = Toast.makeText(
@@ -155,13 +155,13 @@ class RegisterFragment : Fragment() {
         return root
     }
 
-    private fun registrar(usuario: String, email: String, contra: String) {
+    private fun registrar(username: String, email: String, contra: String) {
         //primero cogeremos los nombres que ya estan registrados para comprobar que el nuevo usuario no lo repite
-        nombresCogidos.addListenerForSingleValueEvent(object : ValueEventListener {
+        takenNames.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                Log.e("repetido", "" + dataSnapshot.child(usuario).key)
+                Log.e("repetido", "" + dataSnapshot.child(username).key)
                 //si da false significa que no existe ningun nombre asi registrado
-                if (!dataSnapshot.hasChild(usuario)) {
+                if (!dataSnapshot.hasChild(username)) {
                     // si no existe creamos al usuario con los metodos que da Firebase
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(
                         email,
@@ -171,20 +171,20 @@ class RegisterFragment : Fragment() {
                         if (it.isSuccessful) {
                             //guardamos el  usuario en la bbdd con su id, una foto predeterminada, y su nickname
                             //la id será el id que Firebase le ha dado al hacer el registro
-                            val id = auth.uid.toString()
-                            val foto_predeterminada= "https://firebasestorage.googleapis.com/v0/b/tenisclubdroid.appspot.com/o/usuario.jpg?alt=media&token=b34680bc-64a9-4598-a734-8180aa5d2844"
+                            val uid = auth.uid.toString()
+                            val photo= "https://img.freepik.com/premium-vector/gamer-man_961307-25037.jpg?semt=ais_hybrid&w=740"
                             //public Usuario(String nickName, String fotoPerfil, String descripcion, int rol)
-                            val u = User(usuario, usuario, foto_predeterminada,"Tu descripcion",  0,id)
+                            val u = User(uid, username, email, username, "Tu descripcion", photo)
 
                             //lo guardamos
                             FirebaseAuth.getInstance().currentUser?.let { it1 ->
                                 FirebaseDatabase.getInstance("https://tenisclubdroid-default-rtdb.europe-west1.firebasedatabase.app/")
-                                    .getReference("usuarios").child(
+                                    .getReference("users").child(
                                         it1.uid
                                     ).setValue(u).addOnCompleteListener {
                                         //si ha salido bien agregamos su nickame a los nombres cogidos
                                         if (it.isSuccessful) {
-                                            nombresCogidos.child(usuario).setValue(id)
+                                            takenNames.child(username).setValue(id)
                                             val toast1 = Toast.makeText(
                                                 context,
                                                 "guardado", Toast.LENGTH_SHORT
@@ -217,7 +217,7 @@ class RegisterFragment : Fragment() {
                         "Usuario repetido ,escoja otro",
                         Toast.LENGTH_SHORT
                     ).show()
-                    Log.e("repetido2", dataSnapshot.child(usuario).key.toString())
+                    Log.e("repetido2", dataSnapshot.child(username).key.toString())
                 }
 
             }

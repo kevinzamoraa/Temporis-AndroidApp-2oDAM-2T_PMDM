@@ -33,7 +33,7 @@ import java.util.*
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth;
+    private lateinit var auth: FirebaseAuth
     private val GOOGLE_SIGN_IN = 100
     lateinit var progressBarLogin : ProgressBar
 
@@ -166,9 +166,10 @@ class LoginActivity : AppCompatActivity() {
                         if (task.isSuccessful) {
                             val user = auth.currentUser
                             val uid = user?.uid.orEmpty()
-                            val nombre = user?.displayName ?: "Sin nombre"
-                            val foto = user?.photoUrl?.toString() ?: ""
-                            val userDB = User(user?.uid, nombre, nombre, foto, "Tu descripción", 0, uid)
+                            val displayName = user?.displayName ?: "Sin nombre a mostrar"
+                            val email = user?.email ?: "prueba@prueba.es"
+                            val photo = user?.photoUrl?.toString() ?: "/SinFoto/"
+                            val userDB = User(uid, displayName, email, displayName, "Tu descripción", photo)
 
                             FirebaseDatabase.getInstance("https://tenisclubdroid-default-rtdb.europe-west1.firebasedatabase.app/")
                                 .getReference("usuarios").child(uid).setValue(userDB)
