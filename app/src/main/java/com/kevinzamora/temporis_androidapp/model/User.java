@@ -49,85 +49,88 @@ public class User implements Serializable {
 
     public User(){
 
-        }
+    }
 
-        public String getDescripcion() {
+    public String getDescripcion() {
             return description;
         }
 
-        public void setDescripcion(String description) {
+    public void setDescripcion(String description) {
             this.description = description;
         }
 
-        public String getName() {
-            return username;
+    public String getDisplayName() {
+            return displayName;
         }
 
-        public void setName(String username) {
-            this.username = username;
-        }
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 
+    public void setUsername() { this.username = username; }
 
-        public String getEmail() {
+    public String getUsername() { return username; }
+
+    public String getEmail() {
             return email;
         }
 
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-        public String getProfilePhoto() {
-            return profilePhotoUrl;
-        }
-
-        public void setProfilePhoto(String profilePhotoUrl) {
-            this.profilePhotoUrl = profilePhotoUrl;
-        }
-
-        public String getQrCode() {
-            return QrCode;
-        }
-
-        public void setQrCode(String QrCode) {
-            this.QrCode = QrCode;
-        }
-
-        public String getUid() {
-            return uid;
-        }
-
-        public void setUid(String uid) {
-            this.uid = uid;
-        }
-
-        public int getRol() {
-            return rol;
-        }
-
-        public void setRol(int rol) {
-            this.rol = rol;
-        }
-
-        @Override
-        public String toString() {
-            return "User{" +
-                    "username='" + username + '\'' +
-                    "displayName='" + displayName + '\'' +
-                    ", email='" + email + '\'' +
-                    ", password='" + password + '\'' +
-                    ", profilePhotoUrl='" + profilePhotoUrl + '\'' +
-                    ", QrCode='" + QrCode + '\'' +
-                    ", uid=" + uid +
-                    ", rol=" + rol +
-                    '}';
-        }
+    public void setEmail(String email) {
+        this.email = email;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getProfilePhoto() {
+        return profilePhotoUrl;
+    }
+
+    public void setProfilePhoto(String profilePhotoUrl) {
+        this.profilePhotoUrl = profilePhotoUrl;
+    }
+
+    public String getQrCode() {
+        return QrCode;
+    }
+
+    public void setQrCode(String QrCode) {
+        this.QrCode = QrCode;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public int getRol() {
+        return rol;
+    }
+
+    public void setRol(int rol) {
+        this.rol = rol;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                "displayName='" + displayName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", profilePhotoUrl='" + profilePhotoUrl + '\'' +
+                ", QrCode='" + QrCode + '\'' +
+                ", uid=" + uid +
+                ", rol=" + rol +
+                '}';
+    }
+}
 

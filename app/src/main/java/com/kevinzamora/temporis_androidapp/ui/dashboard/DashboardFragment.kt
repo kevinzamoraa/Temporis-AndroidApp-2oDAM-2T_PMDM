@@ -47,7 +47,7 @@ class DashboardFragment : Fragment() {
 
                 val userData = snapshot.toObject(User::class.java)
                 userData?.let {
-                    binding.etUsuario.setText(it.name)
+                    binding.etUsuario.setText(it.username)
                     binding.etDescripcion.setText(it.descripcion)
                     binding.etDisplayName.setText(it.displayName)
                     binding.etProfileUrl.setText(it.profilePhoto)
