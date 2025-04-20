@@ -168,7 +168,7 @@ class LoginActivity : AppCompatActivity() {
                             val uid = user?.uid.orEmpty()
                             val nombre = user?.displayName ?: "Sin nombre"
                             val foto = user?.photoUrl?.toString() ?: ""
-                            val userDB = User(nombre, nombre, foto, "Tu descripción", 0, uid)
+                            val userDB = User(user?.uid, nombre, nombre, foto, "Tu descripción", 0, uid)
 
                             FirebaseDatabase.getInstance("https://tenisclubdroid-default-rtdb.europe-west1.firebasedatabase.app/")
                                 .getReference("usuarios").child(uid).setValue(userDB)

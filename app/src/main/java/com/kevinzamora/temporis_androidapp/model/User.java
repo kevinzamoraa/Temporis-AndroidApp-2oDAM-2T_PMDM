@@ -4,37 +4,12 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
-        private String username, displayName, email,password,profilePhotoUrl,QrCode,uid,description;
-        private int rol;
+    private String username, displayName, email,password,profilePhotoUrl,QrCode,uid,description;
+    private int rol;
 
+    public User(){
 
-        public User(String username, String displayName, String email, String password, String profilePhotoUrl, String uid,int rol) {
-            this.username = username;
-            this.displayName = displayName;
-            this.email = email;
-            this.password = password;
-            this.profilePhotoUrl = profilePhotoUrl;
-            this.uid = uid;
-            this.rol=rol;
-        }
-
-        public User(String username, String displayName, String email, String password,String uid, int rol) {
-            this.username = username;
-            this.displayName = displayName;
-            this.uid= uid;
-            this.email = email;
-            this.password = password;
-            this.rol = rol;
-        }
-
-        public User(String username, String displayName, String profilePhotoUrl, String description, int rol, String uid) {
-            this.username = username;
-            this.displayName = displayName;
-            this.profilePhotoUrl = profilePhotoUrl;
-            this.description = description;
-            this.rol= rol;
-            this.uid=uid;
-        }
+    }
 
     public User(String uid, String username, String email, String displayName, String description, String profilePhotoUrl) {
         this.uid = uid;
@@ -45,79 +20,43 @@ public class User implements Serializable {
         this.profilePhotoUrl = profilePhotoUrl;
     }
 
+    // Getters y setters
 
+    public String getUid() { return uid; }
 
-    public User(){
-
-    }
-
-    public String getDescripcion() {
-            return description;
-        }
-
-    public void setDescripcion(String description) {
-            this.description = description;
-        }
-
-    public String getDisplayName() {
-            return displayName;
-        }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public void setUsername() { this.username = username; }
+    public void setUid(String uid) { this.uid = uid; }
 
     public String getUsername() { return username; }
 
-    public String getEmail() {
-            return email;
-        }
+    public void setUsername(String username) { this.username = username; }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public String getEmail() { return email; }
 
-    public String getPassword() {
-        return password;
-    }
+    public void setEmail(String email) { this.email = email; }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public String getDisplayName() { return displayName; }
 
-    public String getProfilePhoto() {
-        return profilePhotoUrl;
-    }
+    public void setDisplayName(String displayName) { this.displayName = displayName; }
 
-    public void setProfilePhoto(String profilePhotoUrl) {
-        this.profilePhotoUrl = profilePhotoUrl;
-    }
+    public String getDescription() { return description; }
 
-    public String getQrCode() {
-        return QrCode;
-    }
+    public void setDescription(String description) { this.description = description; }
 
-    public void setQrCode(String QrCode) {
-        this.QrCode = QrCode;
-    }
+    public String getProfilePhotoUrl() { return profilePhotoUrl; }
 
-    public String getUid() {
-        return uid;
-    }
+    public void setProfilePhotoUrl(String profilePhotoUrl) { this.profilePhotoUrl = profilePhotoUrl; }
 
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
+    public String getPassword() { return password; }
 
-    public int getRol() {
-        return rol;
-    }
+    public void setPassword(String password) { this.password = password; }
 
-    public void setRol(int rol) {
-        this.rol = rol;
-    }
+    public String getQrCode() { return QrCode; }
+
+    public void setQrCode(String qrCode) { this.QrCode = qrCode; }
+
+    public int getRol() { return rol; }
+
+    public void setRol(int rol) { this.rol = rol; }
 
     @Override
     public String toString() {
@@ -130,6 +69,7 @@ public class User implements Serializable {
                 ", QrCode='" + QrCode + '\'' +
                 ", uid=" + uid +
                 ", rol=" + rol +
+                ", decription=" + description +
                 '}';
     }
 }

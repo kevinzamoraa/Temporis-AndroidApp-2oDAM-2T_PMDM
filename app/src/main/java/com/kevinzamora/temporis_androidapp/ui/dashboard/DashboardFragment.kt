@@ -48,12 +48,12 @@ class DashboardFragment : Fragment() {
                 val userData = snapshot.toObject(User::class.java)
                 userData?.let {
                     binding.etUsuario.setText(it.username)
-                    binding.etDescripcion.setText(it.descripcion)
                     binding.etDisplayName.setText(it.displayName)
-                    binding.etProfileUrl.setText(it.profilePhoto)
-
+                    binding.etEmail.setText(it.email)
+                    binding.etDescripcion.setText(it.description)
+                    binding.etProfileUrl.setText(it.profilePhotoUrl)
                     Glide.with(requireContext())
-                        .load(it.profilePhoto)
+                        .load(it.profilePhotoUrl)
                         .placeholder(R.drawable.ic_default_profile)
                         .circleCrop()
                         .into(binding.imgProfilePhoto)
@@ -85,7 +85,7 @@ class DashboardFragment : Fragment() {
                     Toast.makeText(requireContext(), "Perfil actualizado", Toast.LENGTH_SHORT).show()
 
                     Glide.with(requireContext())
-                        .load(updatedUser.profilePhoto)
+                        .load(updatedUser.profilePhotoUrl)
                         .placeholder(R.drawable.ic_default_profile)
                         .circleCrop()
                         .into(binding.imgProfilePhoto)
