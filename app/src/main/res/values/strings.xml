@@ -3,7 +3,7 @@
     <string name="app_name">Temporis</string>
     <string name="title_profile">Usuario</string>
     <string name="title_home">Temporizadores</string>
-    <string name="title_goout">Salir</string>
+    <string name="title_logout">Salir</string>
     <string name="title_notifications">Notificaciones</string>
     <color name="logo_background">#FFFBFD</color>
 
@@ -61,6 +61,9 @@
     <string name="name">Nombre</string>
     <string name="confirm_password">Confirmar contraseña</string>
     <string name="register">Registrarse</string>
+
+    <!-- Firebase -->
+    <string name="default_web_client_id">636050813149-6fnav2v1b8tfnnbjhpfvp937bp477r2a.apps.googleusercontent.com</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
