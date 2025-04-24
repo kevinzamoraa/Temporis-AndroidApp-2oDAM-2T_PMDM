@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        if (auth.currentUser != null) {
+      /*  if (auth.currentUser != null) {
             binding.btnLogout.visibility = View.VISIBLE
         } else {
             binding.btnLogout.visibility = View.GONE
@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
-        }
+        }*/
 
     }
 }
