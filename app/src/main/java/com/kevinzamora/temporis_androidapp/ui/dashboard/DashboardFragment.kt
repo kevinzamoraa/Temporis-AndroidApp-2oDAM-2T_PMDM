@@ -1,6 +1,7 @@
 package com.kevinzamora.temporis_androidapp.ui.dashboard
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.google.firebase.firestore.SetOptions
 import com.kevinzamora.temporis_androidapp.R
 import com.kevinzamora.temporis_androidapp.databinding.FragmentDashboardBinding
 import com.kevinzamora.temporis_androidapp.model.User
+import com.kevinzamora.temporis_androidapp.repository.UserRepository
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
@@ -21,6 +23,7 @@ class DashboardFragment : Fragment() {
 
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
+    private val userRepository = UserRepository()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,8 +61,8 @@ class DashboardFragment : Fragment() {
                     binding.etUsername.setText(it.username)
                     binding.etDisplayName.setText(it.displayName)
                     binding.etEmail.setText(it.email)
-                    /*binding.etDescription.setText(it.description)*/
                     binding.etProfileUrl.setText(it.profilePhotoUrl)
+
                     Glide.with(requireContext())
                         .load(it.profilePhotoUrl)
                         .placeholder(R.drawable.ic_default_profile)
@@ -73,33 +76,27 @@ class DashboardFragment : Fragment() {
 
         // Guardar cambios en Firestore
         binding.btnSafe.setOnClickListener {
-            val updatedUser = User(
-                userId,
-                binding.etUsername.text.toString(),
-                user?.email ?: "",
-                binding.etDisplayName.text.toString(),
-                /*binding.etDescription.text.toString(),*/
-                binding.etProfileUrl.text.toString()
-            )
+            val updatedUser = User()
+            updatedUser.uid = userId
+            updatedUser.username = binding.etUsername.text.toString()
+            updatedUser.email = binding.etEmail.text.toString()
+            updatedUser.displayName = binding.etDisplayName.text.toString()
+            updatedUser.profilePhotoUrl = binding.etProfileUrl.text.toString()
 
             lifecycleScope.launch {
-                try {
-                    FirebaseFirestore.getInstance()
-                        .collection("users")
-                        .document(userId)
-                        .set(updatedUser, SetOptions.merge())
-                        .await()
+                userRepository.updateUser(updatedUser).collect { result ->
+                    result.onSuccess {
+                        Toast.makeText(requireContext(), "Perfil actualizado", Toast.LENGTH_SHORT).show()
 
-                    Toast.makeText(requireContext(), "Perfil actualizado", Toast.LENGTH_SHORT).show()
-
-                    Glide.with(requireContext())
-                        .load(updatedUser.profilePhotoUrl)
-                        .placeholder(R.drawable.ic_default_profile)
-                        .circleCrop()
-                        .into(binding.imgProfilePhoto)
-
-                } catch (e: Exception) {
-                    Toast.makeText(requireContext(), "Error al guardar perfil", Toast.LENGTH_SHORT).show()
+                        Glide.with(requireContext())
+                            .load(updatedUser.profilePhotoUrl)
+                            .placeholder(R.drawable.ic_default_profile)
+                            .circleCrop()
+                            .into(binding.imgProfilePhoto)
+                    }.onFailure { e ->
+                        Toast.makeText(requireContext(), "Error al guardar perfil", Toast.LENGTH_SHORT).show()
+                        Log.e("DashboardFragment", "Error al actualizar usuario", e)
+                    }
                 }
             }
         }

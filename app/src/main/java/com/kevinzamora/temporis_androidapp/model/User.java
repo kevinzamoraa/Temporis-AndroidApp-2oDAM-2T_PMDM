@@ -7,8 +7,15 @@ public class User implements Serializable {
     private String username, displayName, email,password,profilePhotoUrl,QrCode,uid/*,description*/;
     private int rol;
 
-    public User(){
-
+    public User() {
+        this.username = "";
+        this.displayName = "";
+        this.email = "";
+        this.password = "";
+        this.profilePhotoUrl = "";
+        this.QrCode = "";
+        this.uid = "";
+        this.rol = 0;
     }
 
     public User(String uid, String username, String email, String displayName, /*String description,*/ String profilePhotoUrl) {

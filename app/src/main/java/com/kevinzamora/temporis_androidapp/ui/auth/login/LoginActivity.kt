@@ -11,7 +11,7 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.tenisclubdroid.ui.Login.RegisterFragment
+import com.kevinzamora.temporis_androidapp.ui.auth.login.RegisterFragment
 import com.kevinzamora.temporis_androidapp.MainActivity
 import com.kevinzamora.temporis_androidapp.R
 import com.kevinzamora.temporis_androidapp.model.User

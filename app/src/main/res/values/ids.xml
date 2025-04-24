@@ -4,4 +4,5 @@
     <item name="logout" type="id" />
     <item name="tvLoginEmailLabel" type="id" />
     <item name="tvRegistroContraLabel" type="id" />
+    <item name="ivRegistroAtras" type="id" />
 </resources>
