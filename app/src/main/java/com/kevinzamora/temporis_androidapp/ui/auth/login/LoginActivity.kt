@@ -20,7 +20,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -169,12 +169,22 @@ class LoginActivity : AppCompatActivity() {
                             val displayName = user?.displayName ?: "Sin nombre a mostrar"
                             val email = user?.email ?: "prueba@prueba.es"
                             val photo = user?.photoUrl?.toString() ?: "/SinFoto/"
-                            val userDB = User(uid, displayName, email, displayName/*, "Tu descripción"*/, photo)
 
-                            FirebaseDatabase.getInstance("https://tenisclubdroid-default-rtdb.europe-west1.firebasedatabase.app/")
-                                .getReference("usuarios").child(uid).setValue(userDB)
+                            // Creamos el objeto User para Firestore
+                            val userDB = User(uid, displayName, email, displayName, photo)
 
-                            goToMain()
+
+                            // Guardar en Firestore
+                            FirebaseFirestore.getInstance()
+                                .collection("users")
+                                .document(uid)
+                                .set(userDB)
+                                .addOnSuccessListener {
+                                    goToMain()
+                                }
+                                .addOnFailureListener { e ->
+                                    showToast("Error al guardar en Firestore: ${e.message}")
+                                }
                         } else {
                             showToast("Error al iniciar sesión con Google")
                         }
